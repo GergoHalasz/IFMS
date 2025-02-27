@@ -1,0 +1,24 @@
+services:
+  ifms:
+    image: ${DOCKER_REGISTRY-}ifms
+    container_name: ifms
+    build:
+      context: .
+      dockerfile: IFMS/Dockerfile
+    ports:
+     - "5010:5010"
+     - "5011:5011"
+ 
+
+  ifms.database:
+    image: postgres:latest
+    container_name: ifms.database
+    environment:
+        - POSTGRES_DB=ifms
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ./.containers/ifms-db:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
