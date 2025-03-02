@@ -30,21 +30,63 @@ namespace Infrastructure.Persistence.DbContexts.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Clients");
+                    b.ToTable("Clients", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.Contract", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ContractNumber")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Contracts", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.Geolocation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("InterventionId")
+                        .HasColumnType("integer");
+
+                    b.Property<double>("Latitude")
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("Longitude")
+                        .HasColumnType("double precision");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InterventionId")
+                        .IsUnique();
+
+                    b.ToTable("Geolocations");
                 });
 
             modelBuilder.Entity("Domain.Entities.Intervention", b =>
@@ -55,7 +97,7 @@ namespace Infrastructure.Persistence.DbContexts.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AssignedClientId")
+                    b.Property<int>("ClientId")
                         .HasColumnType("integer");
 
                     b.Property<DateTime?>("CompletedAt")
@@ -71,21 +113,77 @@ namespace Infrastructure.Persistence.DbContexts.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("Status")
+                    b.Property<int>("StatusId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("SystemType")
+                    b.Property<int>("SystemTypeId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TechnicianId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClientId");
+
+                    b.HasIndex("ContractId");
+
+                    b.HasIndex("StatusId");
+
+                    b.HasIndex("SystemTypeId");
+
+                    b.HasIndex("TechnicianId");
+
+                    b.ToTable("Interventions", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.Signature", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("InterventionId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("SignatureData")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("SignedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("SignedBy")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AssignedClientId");
+                    b.HasIndex("InterventionId");
 
-                    b.ToTable("Interventions");
+                    b.ToTable("Signatures");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Technician", b =>
+            modelBuilder.Entity("Domain.Entities.Status", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("StatusName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Statuses");
+                });
+
+            modelBuilder.Entity("Domain.Entities.SystemType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -95,18 +193,15 @@ namespace Infrastructure.Persistence.DbContexts.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("SkillSet")
-                        .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Technicians");
+                    b.ToTable("SystemTypes", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Entities.TechnicianAssignment", b =>
+            modelBuilder.Entity("Domain.Entities.Technician", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -114,52 +209,84 @@ namespace Infrastructure.Persistence.DbContexts.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("AssignedAt")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
-                    b.Property<int>("InterventionId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("TechnicianId")
-                        .HasColumnType("integer");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("InterventionId");
-
-                    b.HasIndex("TechnicianId");
-
-                    b.ToTable("TechnicianAssignments");
+                    b.ToTable("Technicians", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Entities.Intervention", b =>
-                {
-                    b.HasOne("Domain.Entities.Client", "AssignedClient")
-                        .WithMany("Interventions")
-                        .HasForeignKey("AssignedClientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AssignedClient");
-                });
-
-            modelBuilder.Entity("Domain.Entities.TechnicianAssignment", b =>
+            modelBuilder.Entity("Domain.Entities.Geolocation", b =>
                 {
                     b.HasOne("Domain.Entities.Intervention", "Intervention")
-                        .WithMany("TechnicianAssignments")
-                        .HasForeignKey("InterventionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.Technician", "Technician")
-                        .WithMany("Assignments")
-                        .HasForeignKey("TechnicianId")
+                        .WithOne("Geolocation")
+                        .HasForeignKey("Domain.Entities.Geolocation", "InterventionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Intervention");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Intervention", b =>
+                {
+                    b.HasOne("Domain.Entities.Client", "Client")
+                        .WithMany("Interventions")
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Contract", "Contract")
+                        .WithMany("Interventions")
+                        .HasForeignKey("ContractId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Status", "Status")
+                        .WithMany("Interventions")
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.SystemType", "SystemType")
+                        .WithMany("Interventions")
+                        .HasForeignKey("SystemTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Technician", "Technician")
+                        .WithMany("Interventions")
+                        .HasForeignKey("TechnicianId")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .IsRequired();
+
+                    b.Navigation("Client");
+
+                    b.Navigation("Contract");
+
+                    b.Navigation("Status");
+
+                    b.Navigation("SystemType");
 
                     b.Navigation("Technician");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Signature", b =>
+                {
+                    b.HasOne("Domain.Entities.Intervention", "Intervention")
+                        .WithMany("Signatures")
+                        .HasForeignKey("InterventionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Intervention");
                 });
 
             modelBuilder.Entity("Domain.Entities.Client", b =>
@@ -167,14 +294,32 @@ namespace Infrastructure.Persistence.DbContexts.Migrations
                     b.Navigation("Interventions");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Contract", b =>
+                {
+                    b.Navigation("Interventions");
+                });
+
             modelBuilder.Entity("Domain.Entities.Intervention", b =>
                 {
-                    b.Navigation("TechnicianAssignments");
+                    b.Navigation("Geolocation")
+                        .IsRequired();
+
+                    b.Navigation("Signatures");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Status", b =>
+                {
+                    b.Navigation("Interventions");
+                });
+
+            modelBuilder.Entity("Domain.Entities.SystemType", b =>
+                {
+                    b.Navigation("Interventions");
                 });
 
             modelBuilder.Entity("Domain.Entities.Technician", b =>
                 {
-                    b.Navigation("Assignments");
+                    b.Navigation("Interventions");
                 });
 #pragma warning restore 612, 618
         }

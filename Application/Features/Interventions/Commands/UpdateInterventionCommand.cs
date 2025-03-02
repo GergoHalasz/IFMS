@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Application.Features.Interventions.Commands
 {
-	public class UpdateInterventionCommand : IRequest<InterventionDto> 
+	public class UpdateInterventionCommand : IRequest<bool> 
 	{
 		public int Id { get; set; }
 		public UpdateInterventionDto Intervention { get; set; }

@@ -1,14 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-using Application.Features.Interventions.Handlers;
 using Infrastructure;
 using Infrastructure.Persistence.DbContexts;
+using Application.Mappings;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddAutoMapper(typeof(InterventionMappingProfile));
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<GetInterventionByIdQueryHandler>());
 
 builder.Services.AddInfrastructure(builder.Configuration.GetConnectionString("DefaultConnection"));

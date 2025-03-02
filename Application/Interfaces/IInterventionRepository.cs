@@ -8,6 +8,8 @@ namespace Application.Interfaces
 		Task<List<Intervention>> GetAllAsync();
 		Task AddAsync(Intervention intervention);
 		Task UpdateAsync(Intervention intervention);
+		Task CloseInterventionAsync(int interventionId, Geolocation geolocation, List<Signature> signatures);
+		Task AssignToTechnicianAsync(int interventionId, int technicianId);
 		Task DeleteAsync(int id);
 	}
 }

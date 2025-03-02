@@ -2,34 +2,34 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.Contracts;
 
 namespace Domain.Entities
 {
 	public class Intervention
 	{
-		[Key]
 		public int Id { get; set; }
-
-		[Required]
 		public int ContractId { get; set; }
+		public Contract Contract { get; set; }
 
-		[Required]
+		public int SystemTypeId { get; set; }
 		public SystemType SystemType { get; set; }
 
-		[Required]
-		public int AssignedClientId { get; set; }
+		public int ClientId { get; set; }
+		public Client Client { get; set; }
 
-		[Required]
-		public InterventionStatus Status { get; set; }
+		public int TechnicianId { get; set; }
+		public Technician Technician { get; set; }
 
-		public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+		public int StatusId { get; set; }
+		public Status Status { get; set; }
 
+		public Geolocation Geolocation { get; set; }
+		public ICollection<Signature> Signatures { get; set; }
+
+		public DateTime CreatedAt { get; set; }
 		public DateTime? CompletedAt { get; set; }
 
-		[MaxLength(500)]
-		public string Notes { get; set; }
-
-		public Client AssignedClient { get; set; }
-		public ICollection<TechnicianAssignment> TechnicianAssignments { get; set; } = new List<TechnicianAssignment>();
+		public string Notes { get; set; }  // For additional notes or comments.
 	}
 }

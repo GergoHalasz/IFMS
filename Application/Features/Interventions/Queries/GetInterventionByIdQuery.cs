@@ -1,4 +1,5 @@
 ﻿using Application.DTOs;
+using Domain.Entities;
 using MediatR;
 
 namespace Application.Features.Interventions.Queries

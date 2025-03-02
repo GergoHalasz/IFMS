@@ -1,38 +1,34 @@
-﻿using Domain.Entities;
-using Domain.Enums;
-using MediatR;
+﻿using Application.Features.Interventions.Commands;
 using Application.Interfaces;
+using Domain.Entities;
+using MediatR;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.Features.Interventions.Commands;
 
-namespace Application.Features.Interventions.Handlers
+public class CreateInterventionCommandHandler : IRequestHandler<CreateInterventionCommand, int>
 {
-	public class CreateInterventionCommandHandler : IRequestHandler<CreateInterventionCommand, int>
-	{
-		private readonly IUnitOfWork _unitOfWork;
+    private readonly IUnitOfWork _unitOfWork;
 
-		public CreateInterventionCommandHandler(IUnitOfWork unitOfWork)
-		{
-			_unitOfWork = unitOfWork;
-		}
+    public CreateInterventionCommandHandler(IUnitOfWork unitOfWork)
+    {
+		_unitOfWork = unitOfWork;
+    }
 
-		public async Task<int> Handle(CreateInterventionCommand request, CancellationToken cancellationToken)
-		{
-			var intervention = new Intervention
-			{
-				ContractId = request.Intervention.ContractId,
-				SystemType = (SystemType)request.Intervention.SystemType, // Convert int to SystemType enum
-				AssignedClientId = request.Intervention.AssignedClientId,
-				Status = InterventionStatus.Pending, // Set default status (or from request if needed)
-				Notes = request.Intervention.Notes
-			};
+    public async Task<int> Handle(CreateInterventionCommand request, CancellationToken cancellationToken)
+    {
+        var intervention = new Intervention
+        {
+            ContractId = request.Intervention.ContractId,
+            SystemTypeId = request.Intervention.SystemTypeId,
+            ClientId = request.Intervention.ClientId,
+            TechnicianId = request.Intervention.TechnicianId,
+            StatusId = request.Intervention.StatusId,
+            Notes = request.Intervention.Notes,
+            CreatedAt = DateTime.UtcNow
+        };
 
-
-			await _unitOfWork.Interventions.AddAsync(intervention); 
-			await _unitOfWork.CompleteAsync();
-
-			return intervention.Id;
-		}
-	}
+        await _unitOfWork.Interventions.AddAsync(intervention);
+        return intervention.Id;
+    }
 }

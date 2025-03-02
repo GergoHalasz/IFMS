@@ -5,6 +5,8 @@ services:
     build:
       context: .
       dockerfile: IFMS/Dockerfile
+    depends_on:
+      - ifms.database
     ports:
      - "5010:5010"
      - "5011:5011"
@@ -18,7 +20,7 @@ services:
         - POSTGRES_USER=postgres
         - POSTGRES_PASSWORD=postgres
     volumes:
-      - ./.containers/ifms-db:/var/lib/postgresql/data
+      - ./containers/ifms-db:/var/lib/postgresql/data
     ports:
-      - 5432:5432
+      - 5433:5432
 
