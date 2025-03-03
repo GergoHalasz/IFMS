@@ -14,6 +14,8 @@ namespace Application.Mappings
 				.ForMember(dest => dest.ClientName, opt => opt.MapFrom(src => src.Client.Name))
 				.ForMember(dest => dest.TechnicianName, opt => opt.MapFrom(src => src.Technician.Name))
 				.ForMember(dest => dest.StatusName, opt => opt.MapFrom(src => src.Status.StatusName));
+
+			CreateMap<Contract, ContractDto>();
 		}
 	}
 }

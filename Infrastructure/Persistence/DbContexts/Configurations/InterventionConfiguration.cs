@@ -12,13 +12,11 @@ public class InterventionConfiguration : IEntityTypeConfiguration<Intervention>
 
 		builder.HasOne(i => i.Contract)
 			.WithMany(c => c.Interventions)
-			.HasForeignKey(i => i.ContractId)
-			.OnDelete(DeleteBehavior.Restrict);
+			.HasForeignKey(i => i.ContractId);
 
 		builder.HasOne(i => i.Technician)
 			.WithMany(t => t.Interventions)
-			.HasForeignKey(i => i.TechnicianId)
-			.OnDelete(DeleteBehavior.SetNull);
+			.HasForeignKey(i => i.TechnicianId);
 
 		builder.HasOne(i => i.Status)
 			.WithMany(t => t.Interventions)

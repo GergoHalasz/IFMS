@@ -46,22 +46,6 @@ namespace WebApi.Controllers
 			return NoContent();
 		}
 
-		[HttpPut("{id}/close")]
-		public async Task<IActionResult> Close(int id, [FromBody] CloseInterventionCommand command)
-		{
-			if (id != command.Intervention.Id)
-				return BadRequest("ID mismatch.");
-
-			var query = new GetInterventionByIdQuery(id);
-			var intervention = await _mediator.Send(query);
-
-			if (intervention == null)
-				return NotFound();
-
-			await _mediator.Send(command);
-			return NoContent();
-		}
-
 		[HttpPut("{id}/assign")]
 		public async Task<IActionResult> AssignTechnician(int id, [FromBody] AssignTechnicianCommand command)
 		{

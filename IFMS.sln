@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{3BD7CEDF-06F3-42E1-B393-296CA200233C}"
 EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "frontend", "frontend\frontend.esproj", "{8AF3BA06-4C6A-414B-B60C-2B0CF85229FD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,12 @@ Global
 		{3BD7CEDF-06F3-42E1-B393-296CA200233C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3BD7CEDF-06F3-42E1-B393-296CA200233C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3BD7CEDF-06F3-42E1-B393-296CA200233C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AF3BA06-4C6A-414B-B60C-2B0CF85229FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AF3BA06-4C6A-414B-B60C-2B0CF85229FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AF3BA06-4C6A-414B-B60C-2B0CF85229FD}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{8AF3BA06-4C6A-414B-B60C-2B0CF85229FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AF3BA06-4C6A-414B-B60C-2B0CF85229FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AF3BA06-4C6A-414B-B60C-2B0CF85229FD}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -51,5 +59,6 @@ Global
 		{78970DAE-2644-4656-A99B-2D510C0A5B51} = {49A827C7-456E-4A13-A081-7CEF9EEBFF79}
 		{15113BA0-0930-4778-8A5D-2B607512159F} = {49A827C7-456E-4A13-A081-7CEF9EEBFF79}
 		{3BD7CEDF-06F3-42E1-B393-296CA200233C} = {49A827C7-456E-4A13-A081-7CEF9EEBFF79}
+		{8AF3BA06-4C6A-414B-B60C-2B0CF85229FD} = {49A827C7-456E-4A13-A081-7CEF9EEBFF79}
 	EndGlobalSection
 EndGlobal

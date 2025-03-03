@@ -26,15 +26,35 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.AddCors(options =>
 {
-	options.AddPolicy("AllowAll",
-		policy => policy.AllowAnyOrigin()
-						.AllowAnyMethod()
-						.AllowAnyHeader());
+	options.AddPolicy("AllowReactApp",
+		policy =>
+		{
+			policy.WithOrigins("http://localhost:3000")
+				  .AllowAnyMethod()
+				  .AllowAnyHeader();
+		});
+	options.AddPolicy("AllowWebAPI",
+		policy =>
+		{
+			policy.WithOrigins("https://localhost:5011")
+				  .AllowAnyMethod()
+				  .AllowAnyHeader();
+		});
+	options.AddPolicy("AllowLocalReact",
+		policy =>
+		{
+			policy.WithOrigins("http://localhost:53140")
+				  .AllowAnyMethod()
+				  .AllowAnyHeader();
+		});
 });
 
 var app = builder.Build();
 
-app.UseCors("AllowAll");
+app.UseCors("AllowReactApp");
+app.UseCors("AllowWebAPI");
+app.UseCors("AllowLocalReact");
+
 app.UseSwaggerUI(c =>
 {
 	c.SwaggerEndpoint("/swagger/v1/swagger.json", "Intervention API v1");

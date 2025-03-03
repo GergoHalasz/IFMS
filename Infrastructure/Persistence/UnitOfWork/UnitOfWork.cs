@@ -8,14 +8,17 @@ namespace Infrastructure.UnitOfWork
 	{
 		private readonly ApplicationDbContext _context;
 		private IInterventionRepository _interventionRepository;
+		private IContractRepository _contractRepository;
 
-		public UnitOfWork(ApplicationDbContext context, IInterventionRepository _repository)
+		public UnitOfWork(ApplicationDbContext context, IInterventionRepository _interventionRepository, IContractRepository _contractRepository)
 		{
 			_context = context;
-			_interventionRepository = _repository;
+			this._interventionRepository = _interventionRepository;
+			this._contractRepository = _contractRepository;
 		}
 
 		public IInterventionRepository Interventions =>  _interventionRepository;
+		public IContractRepository Contracts => _contractRepository;
 
 		public async Task<int> CompleteAsync()
 		{

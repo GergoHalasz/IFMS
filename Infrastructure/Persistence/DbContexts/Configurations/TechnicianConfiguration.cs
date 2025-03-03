@@ -20,7 +20,6 @@ public class TechnicianConfiguration : IEntityTypeConfiguration<Technician>
 
 		builder.HasMany(t => t.Interventions)
 			.WithOne(i => i.Technician)
-			.HasForeignKey(i => i.TechnicianId)
-			.OnDelete(DeleteBehavior.SetNull);
+			.HasForeignKey(i => i.TechnicianId);
 	}
 }
