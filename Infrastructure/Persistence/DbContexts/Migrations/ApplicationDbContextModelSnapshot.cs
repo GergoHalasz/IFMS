@@ -38,6 +38,23 @@ namespace Infrastructure.Persistence.DbContexts.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Clients", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Client 1"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Client 2"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Client 3"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Contract", b =>
@@ -62,6 +79,29 @@ namespace Infrastructure.Persistence.DbContexts.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Contracts", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ContractNumber = "C-001",
+                            EndDate = new DateTime(2026, 3, 4, 9, 49, 58, 501, DateTimeKind.Local).AddTicks(6813),
+                            StartDate = new DateTime(2025, 3, 4, 9, 49, 58, 499, DateTimeKind.Local).AddTicks(9549)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ContractNumber = "C-002",
+                            EndDate = new DateTime(2027, 3, 4, 9, 49, 58, 501, DateTimeKind.Local).AddTicks(7073),
+                            StartDate = new DateTime(2025, 3, 4, 9, 49, 58, 501, DateTimeKind.Local).AddTicks(7067)
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ContractNumber = "C-003",
+                            EndDate = new DateTime(2028, 3, 4, 9, 49, 58, 501, DateTimeKind.Local).AddTicks(7077),
+                            StartDate = new DateTime(2025, 3, 4, 9, 49, 58, 501, DateTimeKind.Local).AddTicks(7075)
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Geolocation", b =>
@@ -87,6 +127,29 @@ namespace Infrastructure.Persistence.DbContexts.Migrations
                         .IsUnique();
 
                     b.ToTable("Geolocations");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            InterventionId = 1,
+                            Latitude = 34.052199999999999,
+                            Longitude = -118.2437
+                        },
+                        new
+                        {
+                            Id = 2,
+                            InterventionId = 2,
+                            Latitude = 40.712800000000001,
+                            Longitude = -74.006
+                        },
+                        new
+                        {
+                            Id = 3,
+                            InterventionId = 3,
+                            Latitude = 51.507399999999997,
+                            Longitude = -0.1278
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Intervention", b =>
@@ -135,6 +198,41 @@ namespace Infrastructure.Persistence.DbContexts.Migrations
                     b.HasIndex("TechnicianId");
 
                     b.ToTable("Interventions", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ClientId = 1,
+                            ContractId = 1,
+                            CreatedAt = new DateTime(2025, 3, 4, 9, 49, 58, 502, DateTimeKind.Local).AddTicks(1045),
+                            Notes = "Intervention 1",
+                            StatusId = 1,
+                            SystemTypeId = 1,
+                            TechnicianId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ClientId = 2,
+                            ContractId = 2,
+                            CreatedAt = new DateTime(2025, 3, 4, 9, 49, 58, 502, DateTimeKind.Local).AddTicks(1367),
+                            Notes = "Intervention 2",
+                            StatusId = 2,
+                            SystemTypeId = 2,
+                            TechnicianId = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ClientId = 3,
+                            ContractId = 3,
+                            CreatedAt = new DateTime(2025, 3, 4, 9, 49, 58, 502, DateTimeKind.Local).AddTicks(1372),
+                            Notes = "Intervention 3",
+                            StatusId = 3,
+                            SystemTypeId = 3,
+                            TechnicianId = 3
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Signature", b =>
@@ -164,6 +262,32 @@ namespace Infrastructure.Persistence.DbContexts.Migrations
                     b.HasIndex("InterventionId");
 
                     b.ToTable("Signatures");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            InterventionId = 1,
+                            SignatureData = "data1",
+                            SignedAt = new DateTime(2025, 3, 4, 9, 49, 58, 502, DateTimeKind.Local).AddTicks(2011),
+                            SignedBy = "Signer 1"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            InterventionId = 2,
+                            SignatureData = "data2",
+                            SignedAt = new DateTime(2025, 3, 4, 9, 49, 58, 502, DateTimeKind.Local).AddTicks(2390),
+                            SignedBy = "Signer 2"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            InterventionId = 3,
+                            SignatureData = "data3",
+                            SignedAt = new DateTime(2025, 3, 4, 9, 49, 58, 502, DateTimeKind.Local).AddTicks(2395),
+                            SignedBy = "Signer 3"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Status", b =>
@@ -181,6 +305,23 @@ namespace Infrastructure.Persistence.DbContexts.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Statuses");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            StatusName = "Status 1"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            StatusName = "Status 2"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            StatusName = "Status 3"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.SystemType", b =>
@@ -199,6 +340,23 @@ namespace Infrastructure.Persistence.DbContexts.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("SystemTypes", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "System Type 1"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "System Type 2"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "System Type 3"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Technician", b =>
@@ -222,6 +380,26 @@ namespace Infrastructure.Persistence.DbContexts.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Technicians", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Email = "tech1@domain.com",
+                            Name = "Technician 1"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Email = "tech2@domain.com",
+                            Name = "Technician 2"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Email = "tech3@domain.com",
+                            Name = "Technician 3"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Geolocation", b =>
@@ -246,7 +424,7 @@ namespace Infrastructure.Persistence.DbContexts.Migrations
                     b.HasOne("Domain.Entities.Contract", "Contract")
                         .WithMany("Interventions")
                         .HasForeignKey("ContractId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.Status", "Status")
@@ -264,7 +442,7 @@ namespace Infrastructure.Persistence.DbContexts.Migrations
                     b.HasOne("Domain.Entities.Technician", "Technician")
                         .WithMany("Interventions")
                         .HasForeignKey("TechnicianId")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Client");
